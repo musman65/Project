@@ -39,6 +39,38 @@ public abstract class Human extends Player { // User Class
     }
 
     public void equipItem(Item item) {
-        //TODO: equip the armor or weapon, and storing the other piece in the inventory
+        if (inventory.contains(item)) {
+            if (item instanceof Armor a) {
+                this.inventory.add(this.equippedArmor);
+                this.inventory.remove(a);
+                this.equippedArmor = a;
+                //TODO: print equipped status, requires armor class to be developed
+            } else if (item instanceof Weapon w) {
+                this.inventory.add(this.equippedWeapon);
+                this.inventory.remove(w);
+                this.equippedWeapon = w;
+                //TODO: print equipped status, requires weapon class to be developed
+            } else {
+                System.out.println("Cannot equip that item!");
+            }
+        } else {
+            System.out.println("You don't own that item"); // Should never run if code is  maintained well, but it's just in case
+        }
+    }
+
+    /**
+     * Adds an item to the List of items: inventory
+     * @param item the item to add in the inventory
+     */
+    public void addItemToInventory(Item item) {
+        this.inventory.add(item);
+    }
+
+    /**
+     * Adds a move to the List of moves: moves
+     * @param move the move to add in the moves
+     */
+    public void addMoveToMoves(Move move) {
+        this.moves.add(move);
     }
 }
