@@ -74,6 +74,32 @@ public abstract class Human extends Player { // User Class
         this.moves.add(move);
     }
 
+    /**
+     * Allows the exportation of the save file of the Human class to a .txt file
+     * @return the string to export into to the .txt file
+     */
+    public String easyExportHuman() {
+        String str = "";
+        str += this.name + ",";
+        str += this.health + ",";
+        str += this.maxHealth + ",";
+        str += this.equippedArmor + ",";
+        str += this.equippedWeapon + ",";
+
+        for (int i = 0; i < inventory.size(); i++) {
+            str += inventory.get(i).getName() + ",";
+        }
+        for (int i = 0; i < moves.size(); i++) {
+            if (i == moves.size() - 1) {
+                str += moves.get(i).getName() + "\n";
+            } else {
+                str += moves.get(i).getName() + ",";
+            }
+        }
+
+        return str;
+    }
+
     @Override
     public String toString() {
         return super.toString() +

@@ -14,7 +14,7 @@ public class Wizard extends Human{
 
     // Normal constructor
     public Wizard(String name) {
-        super(name, 100, 100, new ArrayList<>(), new ArrayList<>(), new Armor(), new Weapon());
+        super(name, 100, 100, new ArrayList<>(), new ArrayList<>(), null, null);
     }
 
     // For importing from saves
@@ -22,25 +22,5 @@ public class Wizard extends Human{
         super(name, health, maxHealth, inventory, moves, equippedArmor, equippedWeapon);
     }
 
-    public String easyExport() {
-        String str = "";
-        str += this.name + ",";
-        str += this.health + ",";
-        str += this.maxHealth + ",";
-        str += this.equippedArmor + ",";
-        str += this.equippedWeapon + ",";
 
-        for (int i = 0; i < inventory.size(); i++) {
-            str += inventory.get(i).getName() + ",";
-        }
-        for (int i = 0; i < moves.size(); i++) {
-            if (i == moves.size() - 1) {
-                str += moves.get(i).getName() + "\n";
-            } else {
-                str += moves.get(i).getName() + ",";
-            }
-        }
-
-        return str;
-    }
 }

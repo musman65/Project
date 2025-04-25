@@ -14,7 +14,7 @@ public class Warrior extends Human {
 
     // Normal constructor
     public Warrior(String name) {
-        super(name, 100, 100, new ArrayList<>(), new ArrayList<>(), new Armor(), new Weapon());
+        super(name, 100, 100, new ArrayList<>(), new ArrayList<>(), new Armor("Steelguard Armor", "Forged in the heart of the Emberforge and quenched in sacred waters, the Steelguard Armor\n\tis a relic of the Old Order. Its polished plates gleam with the pride of a thousand battles, and runes etched along \n\tits seams pulse faintly when danger draws near. Worn by knights sworn to protect the realm, it offers not just defense, \n\tbut a legacy.", "Common" ,0.75f), null);
     }
 
     // For importing from saves
@@ -22,25 +22,5 @@ public class Warrior extends Human {
         super(name, health, maxHealth, inventory, moves, equippedArmor, equippedWeapon);
     }
 
-    public String easyExport() {
-        String str = "";
-        str += this.name + ",";
-        str += this.health + ",";
-        str += this.maxHealth + ",";
-        str += this.equippedArmor + ",";
-        str += this.equippedWeapon + ",";
 
-        for (int i = 0; i < inventory.size(); i++) {
-            str += inventory.get(i).getName() + ",";
-        }
-        for (int i = 0; i < moves.size(); i++) {
-            if (i == moves.size() - 1) {
-                str += moves.get(i).getName() + "\n";
-            } else {
-                str += moves.get(i).getName() + ",";
-            }
-        }
-
-        return str;
-    }
 }
