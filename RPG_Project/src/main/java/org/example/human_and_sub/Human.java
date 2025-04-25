@@ -17,10 +17,10 @@ public abstract class Human extends Player { // User Class
 
     public Human(String name, int health, int maxHealth, List<Item> inventory, List<Move> moves, Armor equippedArmor, Weapon equippedWeapon) {
         super(name, health, maxHealth);
-        this.inventory = inventory;
-        this.moves = moves;
         this.equippedArmor = equippedArmor;
         this.equippedWeapon = equippedWeapon;
+        this.moves = moves;
+        this.inventory = inventory;
     }
 
     @Override
@@ -72,5 +72,15 @@ public abstract class Human extends Player { // User Class
      */
     public void addMoveToMoves(Move move) {
         this.moves.add(move);
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() +
+                ", equippedWeapon=" + equippedWeapon +
+                ", equippedArmor=" + equippedArmor +
+                ", moves=" + moves +
+                ", inventory=" + inventory;
+        //TODO: add list printers
     }
 }
