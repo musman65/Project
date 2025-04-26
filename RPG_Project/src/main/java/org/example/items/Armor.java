@@ -13,7 +13,7 @@ public class Armor extends Item {
     @Override
     public String toString() {
         return super.toString() +
-                "[Protection]: " + protection + "\n";
+                "[Protection]: " + (100 - (protection * 100)) + "\n";
     }
 
     @Override

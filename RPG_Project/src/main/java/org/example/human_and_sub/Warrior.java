@@ -14,7 +14,7 @@ public class Warrior extends Human {
 
     // Normal constructor
     public Warrior(String name) {
-        super(name, 100, 100, new ArrayList<>(), new ArrayList<>(), new Armor("Steelguard Armor", "Forged in the heart of the Emberforge and quenched in sacred waters, the Steelguard Armor\n\tis a relic of the Old Order. Its polished plates gleam with the pride of a thousand battles, and runes etched along \n\tits seams pulse faintly when danger draws near. Worn by knights sworn to protect the realm, it offers not just defense, \n\tbut a legacy.", "Common" ,0.75f), null);
+        super(name, 100, 100, new ArrayList<>(), new ArrayList<>(), new Armor("Steelguard Armor", "A sturdy set of iron-plated armor issued to new warriors of the realm. While it lacks enchantments \n\tor ornate detailing, its reliable craftsmanship makes it a dependable choice for frontline combat.", "Common" ,0.75f), null);
     }
 
     // For importing from saves

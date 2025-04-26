@@ -16,7 +16,7 @@ public class Item {
     @Override
     public String toString() {
         return "\n[Name]: \"" + name.substring(0, 1).toUpperCase() + name.substring(1) + "\"\n" +
-                "[Rartiy]: " + rarity +
+                "[Rarity]: " + rarity + "\n" +
                 "\t\"" + description + "\"\n" ;
     }
 
@@ -34,5 +34,13 @@ public class Item {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getRarity() {
+        return rarity;
+    }
+
+    public void setRarity(String rarity) {
+        this.rarity = rarity;
     }
 }
