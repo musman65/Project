@@ -13,12 +13,12 @@ public class Wizard extends Human{
 
     // Normal constructor
     public Wizard(String name) {
-        super(name, 100, 100, new ArrayList<>(), new ArrayList<>(), null, null);
+        super(name, 100, 100,"" ,null, null, new ArrayList<>(), new ArrayList<>());
     }
 
     // For importing from saves
-    public Wizard(String name, int health, int maxHealth, List<Item> inventory, List<Move> moves, Armor equippedArmor, Weapon equippedWeapon) {
-        super(name, health, maxHealth, inventory, moves, equippedArmor, equippedWeapon);
+    public Wizard(String name, int health, int maxHealth, List<Item> inventory, List<Move> moves, Armor equippedArmor, Weapon equippedWeapon, String statusEffect) {
+        super(name, maxHealth, health, statusEffect,equippedWeapon, equippedArmor, moves, inventory);
     }
 
     @Override

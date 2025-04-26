@@ -6,7 +6,7 @@ import org.example.moves.MoveStrategy;
 
 public class Enemy extends Player implements MoveStrategy {
     public Enemy(String name, int health, int maxHealth) {
-        super(name, health, maxHealth);
+        super(name, maxHealth, health, "");
     }
 
     @Override

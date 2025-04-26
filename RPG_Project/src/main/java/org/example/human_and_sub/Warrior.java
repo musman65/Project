@@ -13,12 +13,12 @@ public class Warrior extends Human {
 
     // Normal constructor
     public Warrior(String name) {
-        super(name, 100, 100, new ArrayList<>(), new ArrayList<>(), new Armor("Steelguard Armor", "A sturdy set of iron-plated armor issued to new warriors of the realm. While it lacks enchantments \n\tor ornate detailing, its reliable craftsmanship makes it a dependable choice for frontline combat.", "Common" ,0.75f), null);
+        super(name, 100, 100,"" ,null, null, new ArrayList<>(), new ArrayList<>());
     }
 
     // For importing from saves
-    public Warrior(String name, int health, int maxHealth, List<Item> inventory, List<Move> moves, Armor equippedArmor, Weapon equippedWeapon) {
-        super(name, health, maxHealth, inventory, moves, equippedArmor, equippedWeapon);
+    public Warrior(String name, int health, int maxHealth, List<Item> inventory, List<Move> moves, Armor equippedArmor, Weapon equippedWeapon, String statusEffect) {
+        super(name, maxHealth, health, statusEffect,equippedWeapon, equippedArmor, moves, inventory);
     }
 
     @Override

@@ -18,14 +18,19 @@ public abstract class Human extends Player { // User Class
 
     public Scanner in = new Scanner(System.in);
 
-    public Human(String name, float health, float maxHealth, List<Item> inventory, List<Move> moves, Armor equippedArmor, Weapon equippedWeapon) {
-        super(name, health, maxHealth);
-        this.equippedArmor = equippedArmor;
+    public Human(String statusEffects, float maxHealth, float health, String name, Weapon equippedWeapon, Armor equippedArmor, List<Move> moves, List<Item> inventory) {
+        super(statusEffects, maxHealth, health, name);
         this.equippedWeapon = equippedWeapon;
+        this.equippedArmor = equippedArmor;
         this.moves = moves;
         this.inventory = inventory;
     }
 
+    /**
+     * Asks the user to select a move for him to use
+     * @param player the opposing player damage will be dealt to
+     * @return the move that was used
+     */
     @Override
     public Move choseMove(Player player) {
         for (int i = 1; i <= moves.size(); i++) {
@@ -38,7 +43,11 @@ public abstract class Human extends Player { // User Class
     }
 
     public void usePotion(Potion potion) {
-        //TODO: make a use potion (check for potion type)
+        switch (potion.getPotionType()) {
+            case "Health":
+               break;
+
+        }
     }
 
     public void equipItem(Item item) {
@@ -91,10 +100,10 @@ public abstract class Human extends Player { // User Class
         str += this.equippedArmor + ",";
         str += this.equippedWeapon + ",";
 
-        for (int i = 0; i < inventory.size(); i++) {
-            str += inventory.get(i).getName() + ",";
-            str += inventory.get(i).getDescription() + ",";
-            str += inventory.get(i).getRarity() + ",";
+        for (Item item : inventory) {
+            str += item.getName() + ",";
+            str += item.getDescription() + ",";
+            str += item.getRarity() + ",";
         }
         for (int i = 0; i < moves.size(); i++) {
             if (i == moves.size() - 1) {
@@ -116,11 +125,11 @@ public abstract class Human extends Player { // User Class
         String invStr = "inventory = {";
         String moveStr = "moves = {";
 
-        for (int i = 0; i < inventory.size(); i++) {
-            invStr += inventory.get(i).toString() + ", ";
+        for (Item item : inventory) {
+            invStr += item.toString() + ", ";
         }
-        for (int i = 0; i < moves.size(); i++) {
-            moveStr += "\n" + moves.get(i).toString() + ",";
+        for (Move move : moves) {
+            moveStr += "\n" + move.toString() + ",";
         }
 
         return super.toString() +

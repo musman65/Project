@@ -6,11 +6,13 @@ public abstract class Player implements Fightable {
     protected String name;
     protected float health;
     protected float maxHealth;
+    protected String statusEffects;
 
-    public Player(String name, float health, float maxHealth) {
-        this.name = name;
-        this.health = health;
+    public Player(String statusEffects, float maxHealth, float health, String name) {
+        this.statusEffects = statusEffects;
         this.maxHealth = maxHealth;
+        this.health = health;
+        this.name = name;
     }
 
     /**
@@ -62,5 +64,13 @@ public abstract class Player implements Fightable {
 
     public void setMaxHealth(float maxHealth) {
         this.maxHealth = maxHealth;
+    }
+
+    public String getStatusEffects() {
+        return statusEffects;
+    }
+
+    public void setStatusEffects(String statusEffects) {
+        this.statusEffects = statusEffects;
     }
 }
