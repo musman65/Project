@@ -4,10 +4,10 @@ import java.util.Objects;
 
 public abstract class Player implements Fightable {
     protected String name;
-    protected int health;
-    protected int maxHealth;
+    protected float health;
+    protected float maxHealth;
 
-    public Player(String name, int health, int maxHealth) {
+    public Player(String name, float health, float maxHealth) {
         this.name = name;
         this.health = health;
         this.maxHealth = maxHealth;
@@ -48,19 +48,19 @@ public abstract class Player implements Fightable {
         this.name = name;
     }
 
-    public int getHealth() {
+    public float getHealth() {
         return health;
     }
 
-    public void setHealth(int health) {
+    public void setHealth(float health) {
         this.health = health;
     }
 
-    public int getMaxHealth() {
+    public float getMaxHealth() {
         return maxHealth;
     }
 
-    public void setMaxHealth(int maxHealth) {
+    public void setMaxHealth(float maxHealth) {
         this.maxHealth = maxHealth;
     }
 }

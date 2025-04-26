@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Wizard extends Human{
-    private final Move.Type selfType = Move.Type.Ghost;
     private final Move.Type weakness = Move.Type.Physical;
 
     // Normal constructor
@@ -22,5 +21,12 @@ public class Wizard extends Human{
         super(name, health, maxHealth, inventory, moves, equippedArmor, equippedWeapon);
     }
 
-
+    @Override
+    public void takeDamage(int damage, Move.Type moveType) {
+        int multi = 1;
+        if (moveType.equals(weakness)) {
+            multi = 2;
+        }
+        this.health -= (multi * (this.equippedArmor.getProtection() * damage));
+    }
 }

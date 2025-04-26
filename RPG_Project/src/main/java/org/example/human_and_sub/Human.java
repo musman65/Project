@@ -8,6 +8,7 @@ import org.example.items.Weapon;
 import org.example.moves.Move;
 
 import java.util.List;
+import java.util.Scanner;
 
 public abstract class Human extends Player { // User Class
     protected Weapon equippedWeapon;
@@ -15,7 +16,9 @@ public abstract class Human extends Player { // User Class
     protected List<Move> moves;
     protected List<Item> inventory;
 
-    public Human(String name, int health, int maxHealth, List<Item> inventory, List<Move> moves, Armor equippedArmor, Weapon equippedWeapon) {
+    public Scanner in = new Scanner(System.in);
+
+    public Human(String name, float health, float maxHealth, List<Item> inventory, List<Move> moves, Armor equippedArmor, Weapon equippedWeapon) {
         super(name, health, maxHealth);
         this.equippedArmor = equippedArmor;
         this.equippedWeapon = equippedWeapon;
@@ -25,31 +28,33 @@ public abstract class Human extends Player { // User Class
 
     @Override
     public Move choseMove(Player player) {
-        //TODO: loop thru moves and make user chose one
-        return null;
-    }
+        for (int i = 1; i <= moves.size(); i++) {
+            System.out.print(i + ".)");
+            System.out.println(moves.get(i - 1));
+        }
 
-    @Override
-    public void takeDamage(int damage) {
-        //TODO: check armor buff and take less dmg // check if weak to typing
+        System.out.println("What move do you want to use?");
+        return moves.get(in.nextInt() - 1);
     }
 
     public void usePotion(Potion potion) {
-        //TODO: use potion
+        //TODO: make a use potion (check for potion type)
     }
 
     public void equipItem(Item item) {
         if (inventory.contains(item)) {
             if (item instanceof Armor a) {
                 this.inventory.add(this.equippedArmor);
+                this.maxHealth -= (100 - (this.equippedArmor.getProtection() * 100));
                 this.inventory.remove(a);
                 this.equippedArmor = a;
-                //TODO: print equipped status, requires armor class to be developed
+                this.maxHealth += (100 - (this.equippedArmor.getProtection() * 100));
+                System.out.println("Equipped " + equippedArmor.getName() + "!");
             } else if (item instanceof Weapon w) {
                 this.inventory.add(this.equippedWeapon);
                 this.inventory.remove(w);
                 this.equippedWeapon = w;
-                //TODO: print equipped status, requires weapon class to be developed
+                System.out.println("Equipped " + equippedWeapon.getName() + "!");
             } else {
                 System.out.println("Cannot equip that item!");
             }
@@ -88,12 +93,18 @@ public abstract class Human extends Player { // User Class
 
         for (int i = 0; i < inventory.size(); i++) {
             str += inventory.get(i).getName() + ",";
+            str += inventory.get(i).getDescription() + ",";
+            str += inventory.get(i).getRarity() + ",";
         }
         for (int i = 0; i < moves.size(); i++) {
             if (i == moves.size() - 1) {
-                str += moves.get(i).getName() + "\n";
+                str += moves.get(i).getName() + ",";
+                str += moves.get(i).getMoveType() + ",";
+                str += moves.get(i).getDamage() + "\n";
             } else {
                 str += moves.get(i).getName() + ",";
+                str += moves.get(i).getMoveType() + ",";
+                str += moves.get(i).getDamage() + ",";
             }
         }
 
@@ -102,11 +113,20 @@ public abstract class Human extends Player { // User Class
 
     @Override
     public String toString() {
+        String invStr = "inventory = {";
+        String moveStr = "moves = {";
+
+        for (int i = 0; i < inventory.size(); i++) {
+            invStr += inventory.get(i).toString() + ", ";
+        }
+        for (int i = 0; i < moves.size(); i++) {
+            moveStr += "\n" + moves.get(i).toString() + ",";
+        }
+
         return super.toString() +
                 ", equippedWeapon=" + equippedWeapon +
                 ", equippedArmor=" + equippedArmor +
-                ", moves=" + moves +
-                ", inventory=" + inventory;
-        //TODO: add list printers
+                ", moves=" + moveStr +
+                ", inventory=" + invStr;
     }
 }

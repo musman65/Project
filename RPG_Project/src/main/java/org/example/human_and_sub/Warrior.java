@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Warrior extends Human {
-    private final Move.Type selfType = Move.Type.Physical;
     private final Move.Type weakness = Move.Type.Ghost;
 
     // Normal constructor
@@ -22,5 +21,12 @@ public class Warrior extends Human {
         super(name, health, maxHealth, inventory, moves, equippedArmor, equippedWeapon);
     }
 
-
+    @Override
+    public void takeDamage(int damage, Move.Type moveType) {
+        int multi = 1;
+        if (moveType.equals(weakness)) {
+            multi = 2;
+        }
+        this.health -= (multi * (this.equippedArmor.getProtection() * damage));
+    }
 }

@@ -10,7 +10,7 @@ public class Enemy extends Player implements MoveStrategy {
     }
 
     @Override
-    public void takeDamage(int damage) {
+    public void takeDamage(int damage, Move.Type moveType) {
 
     }
 
