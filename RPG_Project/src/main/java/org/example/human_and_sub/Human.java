@@ -50,6 +50,10 @@ public abstract class Human extends Player { // User Class
         }
     }
 
+    /**
+     * Equips a piece of Armor or Weapon on the user's character, stores the already equipped item in to the inventory and changes all the stats accordingly
+     * @param item the item to be equipped
+     */
     public void equipItem(Item item) {
         if (inventory.contains(item)) {
             if (item instanceof Armor a) {
@@ -86,6 +90,10 @@ public abstract class Human extends Player { // User Class
      */
     public void addMoveToMoves(Move move) {
         this.moves.add(move);
+    }
+
+    public String userStats() {
+        return ""; //TODO: make it print the stats pertinent during the battle
     }
 
     /**

@@ -6,7 +6,6 @@ public class Move {
     private String name;
     private Type moveType;
     private int damage;
-    private String extraBuff;
 
     public Move(String name, Type moveType, int damage) {
         this.name = name;
@@ -16,15 +15,9 @@ public class Move {
 
     @Override
     public String toString() {
-        if (extraBuff == null || extraBuff.isBlank()) {
-            return "Move Name: \"" + name + "\"" +
-                    "\n\tType = " + moveType +
-                    "\n\tDamage = " + damage;
-        }
         return "Move Name: \"" + name + "\"" +
                 "\n\tType = " + moveType +
-                "\n\tDamage = " + damage +
-                "\n\tExtra: " + extraBuff;
+                "\n\tDamage = " + damage;
     }
 
     @Override

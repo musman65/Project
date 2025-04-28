@@ -13,12 +13,12 @@ public class Warrior extends Human {
 
     // Normal constructor
     public Warrior(String name) {
-        super(name, 100, 100,"" ,null, null, new ArrayList<>(), new ArrayList<>());
+        super(name, 100, 100, null, null, new ArrayList<>(), new ArrayList<>());
     }
 
     // For importing from saves
-    public Warrior(String name, int health, int maxHealth, List<Item> inventory, List<Move> moves, Armor equippedArmor, Weapon equippedWeapon, String statusEffect) {
-        super(name, maxHealth, health, statusEffect,equippedWeapon, equippedArmor, moves, inventory);
+    public Warrior(String name, int health, int maxHealth, List<Item> inventory, List<Move> moves, Armor equippedArmor, Weapon equippedWeapon) {
+        super(name, health, maxHealth ,equippedWeapon, equippedArmor, moves, inventory);
     }
 
     @Override
