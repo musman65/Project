@@ -18,8 +18,8 @@ public abstract class Human extends Player { // User Class
 
     public Scanner in = new Scanner(System.in);
 
-    public Human(String statusEffects, float maxHealth, float health, String name, Weapon equippedWeapon, Armor equippedArmor, List<Move> moves, List<Item> inventory) {
-        super(statusEffects, maxHealth, health, name);
+    public Human(String name, float health, float maxHealth, Weapon equippedWeapon, Armor equippedArmor, List<Move> moves, List<Item> inventory) {
+        super(name, health, maxHealth);
         this.equippedWeapon = equippedWeapon;
         this.equippedArmor = equippedArmor;
         this.moves = moves;

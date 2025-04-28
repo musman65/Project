@@ -6,10 +6,8 @@ public abstract class Player implements Fightable {
     protected String name;
     protected float health;
     protected float maxHealth;
-    protected String statusEffects;
 
-    public Player(String statusEffects, float maxHealth, float health, String name) {
-        this.statusEffects = statusEffects;
+    public Player(String name, float health, float maxHealth) {
         this.maxHealth = maxHealth;
         this.health = health;
         this.name = name;
@@ -17,6 +15,7 @@ public abstract class Player implements Fightable {
 
     /**
      * Checks to see if the player object is alive
+     *
      * @return a boolean representing if it is alive or not
      */
     public boolean isAlive() {
@@ -64,13 +63,5 @@ public abstract class Player implements Fightable {
 
     public void setMaxHealth(float maxHealth) {
         this.maxHealth = maxHealth;
-    }
-
-    public String getStatusEffects() {
-        return statusEffects;
-    }
-
-    public void setStatusEffects(String statusEffects) {
-        this.statusEffects = statusEffects;
     }
 }
