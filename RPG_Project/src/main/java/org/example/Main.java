@@ -6,7 +6,6 @@ import org.example.moves.Move;
 public class Main {
     public static void main(String[] args) {
         Warrior w1 = new Warrior("Usman");
-        Move m1 = new Move("Fireball", Move.Type.Physical, 10);
-        System.out.println(m1);
+
     }
 }

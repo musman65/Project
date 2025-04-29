@@ -130,8 +130,8 @@ public abstract class Human extends Player { // User Class
 
     @Override
     public String toString() {
-        String invStr = "inventory = {";
-        String moveStr = "moves = {";
+        String invStr = "";
+        String moveStr = "";
 
         for (Item item : inventory) {
             invStr += item.toString() + ", ";
@@ -143,7 +143,7 @@ public abstract class Human extends Player { // User Class
         return super.toString() +
                 ", equippedWeapon=" + equippedWeapon +
                 ", equippedArmor=" + equippedArmor +
-                ", moves=" + moveStr +
-                ", inventory=" + invStr;
+                ", moves= {" + moveStr + "}" +
+                ", inventory= {" + invStr + "}";
     }
 }
