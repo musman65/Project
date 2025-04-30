@@ -42,6 +42,10 @@ public abstract class Human extends Player { // User Class
         return moves.get(in.nextInt() - 1);
     }
 
+    /**
+     * Uses a potion (adds health)
+     * @param potion the potion that will be used
+     */
     public void usePotion(Potion potion) {
         switch (potion.getPotionType()) {
             case "Health":
