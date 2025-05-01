@@ -32,7 +32,7 @@ public abstract class Human extends Player { // User Class
      * @return the move that was used
      */
     @Override
-    public Move choseMove(Player player) {
+    public Move chooseMove(Player player) {
         for (int i = 1; i <= moves.size(); i++) {
             System.out.print(i + ".)");
             System.out.println(moves.get(i - 1));
@@ -59,13 +59,20 @@ public abstract class Human extends Player { // User Class
      * @param item the item to be equipped
      */
     public void equipItem(Item item) {
+        if (item == null) {
+            return;
+        }
+
         if (inventory.contains(item)) {
             if (item instanceof Armor a) {
+                float currentProt = this.equippedArmor == null ? 0 : this.equippedArmor.getProtection();
                 this.inventory.add(this.equippedArmor);
-                this.maxHealth -= (100 - (this.equippedArmor.getProtection() * 100));
+                if (!(currentProt == 0)) {
+                    this.maxHealth -= (100 - (currentProt * 100));
+                }
                 this.inventory.remove(a);
                 this.equippedArmor = a;
-                this.maxHealth += (100 - (this.equippedArmor.getProtection() * 100));
+                this.maxHealth += (100 - (a.getProtection() * 100));
                 System.out.println("Equipped " + equippedArmor.getName() + "!");
             } else if (item instanceof Weapon w) {
                 this.inventory.add(this.equippedWeapon);
@@ -96,8 +103,12 @@ public abstract class Human extends Player { // User Class
         this.moves.add(move);
     }
 
-    public String userStats() {
-        return ""; //TODO: make it print the stats pertinent during the battle
+    /**
+     * Overload method of addMoveToMoves() if multiple moves need to be added at once
+     * @param moves the list of moves
+     */
+    public void addMoveToMoves(List<Move> moves) {
+        this.moves = moves;
     }
 
     /**

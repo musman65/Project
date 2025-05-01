@@ -32,7 +32,7 @@ public abstract class Enemy extends Player implements MoveStrategy {
      * @return a Move to use for the enemy
      */
     @Override
-    public Move choseMove(Player player) {
+    public Move chooseMove(Player player) {
         return null;
     }
 }

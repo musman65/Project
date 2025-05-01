@@ -35,5 +35,5 @@ public interface Fightable {
      * @param player The player that is choosing a move (human or enemy)
      * @return the Move chosen
      */
-    Move choseMove(Player player);
+    Move chooseMove(Player player);
 }

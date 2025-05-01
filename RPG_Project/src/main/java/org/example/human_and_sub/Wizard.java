@@ -29,10 +29,11 @@ public class Wizard extends Human{
     @Override
     public void takeDamage(int damage, Move.Type moveType) {
         int multi = 1;
+        float currentProt = this.equippedArmor == null ? 1 : this.equippedArmor.getProtection();
         if (moveType.equals(weakness)) {
             multi = 2;
         }
 
-        this.health -= (multi * (this.equippedArmor.getProtection() * damage));
+        this.health -= (multi * (currentProt * damage));
     }
 }
