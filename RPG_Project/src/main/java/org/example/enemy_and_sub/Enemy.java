@@ -5,14 +5,23 @@ import org.example.human_and_sub.Human;
 import org.example.moves.Move;
 import org.example.moves.MoveStrategy;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public abstract class Enemy extends Player implements MoveStrategy {
     protected List<Move> moves = new ArrayList<>();
 
     public Enemy(String name, int health, int maxHealth) {
         super(name, maxHealth, health);
+    }
+
+    public Map<String, Integer> moveSorter (Move.Type moveType, List<Move> moves) {
+        Map<String, Integer> map = new HashMap<>();
+
+        for (int i = 0; i < moves.size(); i++) {
+//            if (map.put(i))
+        }
+
+        return map;
     }
 
     /**
@@ -23,6 +32,8 @@ public abstract class Enemy extends Player implements MoveStrategy {
      */
     @Override
     public Move selectMoveStrategy(Enemy enemy, Human human) {
+
+
         return null;
     }
 

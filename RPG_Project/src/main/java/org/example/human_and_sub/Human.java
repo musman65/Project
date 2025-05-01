@@ -8,6 +8,7 @@ import org.example.items.Weapon;
 import org.example.moves.Move;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 public abstract class Human extends Player { // User Class
@@ -15,15 +16,17 @@ public abstract class Human extends Player { // User Class
     protected Armor equippedArmor;
     protected List<Move> moves;
     protected List<Item> inventory;
+    protected Map<Move.Status, Integer> statusEffects;
 
     public Scanner in = new Scanner(System.in);
 
-    public Human(String name, float health, float maxHealth, Weapon equippedWeapon, Armor equippedArmor, List<Move> moves, List<Item> inventory) {
+    public Human(String name, float health, float maxHealth, Weapon equippedWeapon, Armor equippedArmor, List<Move> moves, List<Item> inventory, Map<Move.Status, Integer> statusEffects) {
         super(name, health, maxHealth);
         this.equippedWeapon = equippedWeapon;
         this.equippedArmor = equippedArmor;
         this.moves = moves;
         this.inventory = inventory;
+        this.statusEffects = statusEffects;
     }
 
     /**
@@ -132,11 +135,11 @@ public abstract class Human extends Player { // User Class
             if (i == moves.size() - 1) {
                 str += moves.get(i).getName() + ",";
                 str += moves.get(i).getMoveType() + ",";
-                str += moves.get(i).getDamage() + "\n";
+                str += moves.get(i).getBuff() + "\n";
             } else {
                 str += moves.get(i).getName() + ",";
                 str += moves.get(i).getMoveType() + ",";
-                str += moves.get(i).getDamage() + ",";
+                str += moves.get(i).getBuff() + ",";
             }
         }
 

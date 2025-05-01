@@ -5,31 +5,41 @@ import java.util.Objects;
 public class Move {
     private String name;
     private Type moveType;
-    private int damage;
+    private int buff;
+    private Effect effect;
 
-    public Move(String name, Type moveType, int damage) {
+    public Move(String name, Type moveType, int buff, Effect effect) {
         this.name = name;
         this.moveType = moveType;
-        this.damage = damage;
+        this.buff = buff;
+        this.effect = effect;
     }
 
     @Override
     public String toString() {
         return "Move Name: \"" + name + "\"" +
                 "\n\tType = " + moveType +
-                "\n\tDamage = " + damage;
+                "\n\tDamage = " + buff;
     }
 
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Move move = (Move) o;
-        return damage == move.damage && Objects.equals(name, move.name) && moveType == move.moveType;
+        return buff == move.buff && Objects.equals(name, move.name) && moveType == move.moveType;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, moveType, damage);
+        return Objects.hash(name, moveType, buff);
+    }
+
+    public Effect getEffect() {
+        return effect;
+    }
+
+    public void setEffect(Effect effect) {
+        this.effect = effect;
     }
 
     public String getName() {
@@ -48,12 +58,28 @@ public class Move {
         this.moveType = moveType;
     }
 
-    public int getDamage() {
-        return damage;
+    public int getBuff() {
+        return buff;
     }
 
-    public void setDamage(int damage) {
-        this.damage = damage;
+    public void setBuff(int buff) {
+        this.buff = buff;
+    }
+
+    public enum Status {
+        Stun, // Player cannot do anything for 1 turn
+        Hypnotize, // Slight change of player using the move on themselves
+        Burn, // Player loses
+        Sleep,
+        Spook,
+        ArmorBreak,
+        ArmorUp,
+        DamageBuff,
+        Regen
+    }
+
+    public enum Effect {
+        Heal, Damage, Status
     }
 
     public enum Type {
