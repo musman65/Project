@@ -8,7 +8,7 @@ import org.example.moves.MoveStrategy;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Enemy extends Player implements MoveStrategy {
+public abstract class Enemy extends Player implements MoveStrategy {
     protected List<Move> moves = new ArrayList<>();
 
     public Enemy(String name, int health, int maxHealth) {
@@ -24,16 +24,6 @@ public class Enemy extends Player implements MoveStrategy {
     @Override
     public Move selectMoveStrategy(Enemy enemy, Human human) {
         return null;
-    }
-
-    /**
-     * Takes damage by removing health from the health field by taking weaknesses into account
-     * @param damage the damage dealt (how much should be removed)
-     * @param moveType the type of move that was used
-     */
-    @Override
-    public void takeDamage(int damage, Move.Type moveType) {
-
     }
 
     /**

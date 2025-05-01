@@ -21,6 +21,11 @@ public class Warrior extends Human {
         super(name, health, maxHealth ,equippedWeapon, equippedArmor, moves, inventory);
     }
 
+    /**
+     * Allows the user to take damage while taking into account of its weakness
+     * @param damage how much damage it takes
+     * @param moveType the type of move that was used to check if the entity is weak to the move
+     */
     @Override
     public void takeDamage(int damage, Move.Type moveType) {
         int multi = 1;

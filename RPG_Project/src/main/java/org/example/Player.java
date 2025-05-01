@@ -15,7 +15,6 @@ public abstract class Player implements Fightable {
 
     /**
      * Checks to see if the player object is alive
-     *
      * @return a boolean representing if it is alive or not
      */
     public boolean isAlive() {

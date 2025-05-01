@@ -47,10 +47,10 @@ public abstract class Human extends Player { // User Class
      * @param potion the potion that will be used
      */
     public void usePotion(Potion potion) {
-        switch (potion.getPotionType()) {
-            case "Health":
-               break;
-
+        if (potion.getBuff() + this.health > maxHealth) {
+            health = maxHealth;
+        } else {
+            health += potion.getBuff();
         }
     }
 
