@@ -31,7 +31,7 @@ public class Move {
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, moveType, buff);
+        return Objects.hash(name, moveType, (Integer) buff, effect);
     }
 
     public Effect getEffect() {

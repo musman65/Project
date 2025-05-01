@@ -29,6 +29,10 @@ public abstract class Human extends Player { // User Class
         this.statusEffects = statusEffects;
     }
 
+    public int doDamage(Move move) {
+        return 0;
+    }
+
     /**
      * Asks the user to select a move for him to use
      * @param player the opposing player damage will be dealt to

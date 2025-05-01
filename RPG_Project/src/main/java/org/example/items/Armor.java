@@ -25,7 +25,7 @@ public class Armor extends Item {
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(protection);
+        return Objects.hashCode((Float) protection);
     }
 
     public float getProtection() {
