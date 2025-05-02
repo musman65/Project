@@ -1,16 +1,41 @@
 package org.example;
 
+import org.example.moves.Move;
+
+import java.util.Map;
 import java.util.Objects;
 
 public abstract class Player implements Fightable {
     protected String name;
     protected float health;
     protected float maxHealth;
+    protected Map<Move.Status, Integer> statusEffects;
 
-    public Player(String name, float health, float maxHealth) {
+    public Player(String name, float health, float maxHealth, Map<Move.Status, Integer> statusEffects) {
         this.maxHealth = maxHealth;
         this.health = health;
         this.name = name;
+        this.statusEffects = statusEffects;
+    }
+
+    /**
+     * Uses a move (adds health)
+     * @param move the potion that will be used
+     */
+    public void addHealth(Move move) {
+        if (move.getBuff() + health > maxHealth) {
+            health = maxHealth;
+        } else {
+            health += move.getBuff();
+        }
+    }
+
+    /**
+     * Inflicts a status effect on the player entity
+     * @param move the move that was used
+     */
+    public void inflictStatus(Move move) {
+        statusEffects.put(move.getStatus(), statusEffects.get(move.getStatus()) + move.getBuff());
     }
 
     /**

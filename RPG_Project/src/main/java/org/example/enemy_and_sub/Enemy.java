@@ -10,8 +10,8 @@ import java.util.*;
 public abstract class Enemy extends Player implements MoveStrategy {
     protected List<Move> moves = new ArrayList<>();
 
-    public Enemy(String name, int health, int maxHealth) {
-        super(name, maxHealth, health);
+    public Enemy(String name, int health, int maxHealth, Map<Move.Status, Integer> statusEffects) {
+        super(name, maxHealth, health, statusEffects);
     }
 
     public Map<String, Integer> moveSorter (Move.Type moveType, List<Move> moves) {

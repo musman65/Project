@@ -1,6 +1,7 @@
 package org.example.moves;
 
 import org.example.Player;
+import org.example.enemy_and_sub.Enemy;
 
 import java.util.Objects;
 
@@ -21,14 +22,17 @@ public class Move {
 
     /**
      * Uses a move (only for non-damaging moves)
-     * @param player1 the player entity that is using the move
+     * @param player the player entity that is using the move
      */
-    public void use(Player player1) {
-        if (status != Status.None && effect == Effect.Damage) {
+    public void use(Player player) {
+        if (status == Status.None && effect == Effect.Damage) {
             return;
         }
-
-
+        if (effect == Effect.Heal) {
+            player.addHealth(this);
+        } else if (effect == Effect.Status) {
+            player.inflictStatus(this);
+        }
     }
 
     @Override
@@ -86,7 +90,7 @@ public class Move {
         Stun, // Player cannot do anything for 1 - 2 turn, however, his move has a chance (20%) to go through the stun
         Hypnotize, // 50% chance of player using the move on themselves, lasts for 3 turns
         Burn, // Player loses a little bit of health every turn for 2 - 5
-        Sleep, // Player cannot do anything for 2 - 3 but can wake up randomly whenever (cannot do anything on the turn he wakes up)
+        Sleep, // Player cannot do anything for 2 - 3 but can wake up randomly whenever
         Spook, // Player does 50% less damage || boss only buff
         ArmorBreak, // Player's armor protection is decreased 2x
         ArmorUp, // Player's armor protection is increased 2x

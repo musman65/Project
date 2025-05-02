@@ -1,6 +1,7 @@
 package org.example.human_and_sub;
 
 import org.example.Player;
+import org.example.enemy_and_sub.Enemy;
 import org.example.items.Armor;
 import org.example.items.Item;
 import org.example.items.Potion;
@@ -17,57 +18,110 @@ public abstract class Human extends Player { // User Class
     protected Armor equippedArmor;
     protected List<Move> moves;
     protected List<Item> inventory;
-    protected Map<Move.Status, Integer> statusEffects;
 
     public Scanner in = new Scanner(System.in);
 
     public Human(String name, float health, float maxHealth, Weapon equippedWeapon, Armor equippedArmor, List<Move> moves, List<Item> inventory, Map<Move.Status, Integer> statusEffects) {
-        super(name, health, maxHealth);
+        super(name, health, maxHealth, statusEffects);
         this.equippedWeapon = equippedWeapon;
         this.equippedArmor = equippedArmor;
         this.moves = moves;
         this.inventory = inventory;
-        this.statusEffects = statusEffects;
     }
 
     /**
      * Handles all the damage dealt with what move was used, what weapon is equipped and any status effects active
      * @param move the move that is used
-     * @return the amount of damage done;
+     * @param enemy the enemy the move is being used against
      */
-    public int doDamage(Move move) {
+    public void doDamage(Move move, Enemy enemy) {
         Random rand = new Random();
+        float multi = 1;
+
+        if (this.statusEffects.get(Move.Status.DamageBuff) > 0) {
+            multi = 2;
+            this.statusEffects.put(Move.Status.DamageBuff, this.statusEffects.get(Move.Status.DamageBuff) - 1);
+        } else if (this.statusEffects.get(Move.Status.Spook) > 0) {
+            multi = 0.5f;
+            this.statusEffects.put(Move.Status.Spook, this.statusEffects.get(Move.Status.Spook) - 1);
+        }
+
         // Checks for stun
         if (this.statusEffects.get(Move.Status.Stun) > 0) {
             int willYouBreakFreeFromTheStun = rand.nextInt(1, 6);
 
+            // 20% chance to break free from the stun
             if (willYouBreakFreeFromTheStun == 4) {
+
                 System.out.println("The stun wore off!");
-                this.statusEffects.put(Move.Status.Stun, 0);
-                move.use(this);
-                return move.getBuff() + equippedWeapon.getDamage();
+                this.statusEffects.put(Move.Status.Stun, 0); // Sets turns left to 0
+
+                if (move.getEffect() != Move.Effect.Damage) {
+                    move.use(this);
+                    return;
+                }
+
+                enemy.takeDamage((int) (move.getBuff() + equippedWeapon.getDamage() * multi), move);
             } else {
                 System.out.println("You are stunned!");
                 this.statusEffects.put(Move.Status.Stun, this.statusEffects.get(Move.Status.Stun) - 1);
             }
 
             if (this.statusEffects.get(Move.Status.Stun) == 0) {
-                System.out.println("The stun was lifted!");
-                return 0;
+                System.out.println("The stun was lifted, you will be able to attack next round!");
             }
-        }
 
+            return;
+        }
+        //Checks for hypnosis
         if (this.statusEffects.get(Move.Status.Hypnotize) > 0) {
             int willYouHitYourself = rand.nextInt(1, 3);
 
+            // Checks to see if you hit yourself or not
             if (willYouHitYourself == 1) {
-                this.takeDamage(move.getBuff() + );
-            } else {
 
+                System.out.println("Because you were hypnotized, you ended up hitting yourself!");
+                this.takeDamage((int) (move.getBuff() + equippedWeapon.getDamage() * multi), move);
+                this.statusEffects.put(Move.Status.Hypnotize, this.statusEffects.get(Move.Status.Hypnotize) - 1);
+
+            } else { // If you don't hit yourself, the move works
+
+                System.out.println("Your move manage to hit to correct target!");
+                this.statusEffects.put(Move.Status.Hypnotize, this.statusEffects.get(Move.Status.Hypnotize) - 1);
+                if (move.getEffect() != Move.Effect.Damage) {
+                    move.use(this); // Uses move if it is a healing or status move
+                    return;
+                }
+                enemy.takeDamage((int) (move.getBuff() + equippedWeapon.getDamage() * multi), move);
+            }
+
+            // Lets the person know if the hypnosis ran out
+            if (this.statusEffects.get(Move.Status.Hypnotize) == 0) {
+                System.out.println("Your hypnosis wore off, you will be able to attack next round!");
+            }
+
+            return;
+        }
+
+        if (this.statusEffects.get(Move.Status.Sleep) > 0) {
+            int willYouWakeUp = rand.nextInt(1, 5); // 20% chance to wake up
+
+            if (willYouWakeUp == 1) {
+                System.out.println("You suddenly wake up from your slumber!");
+                this.statusEffects.put(Move.Status.Sleep, 0);
+                enemy.takeDamage((int) (move.getBuff() + equippedWeapon.getDamage() * multi), move);
+                return;
+            } else {
+                System.out.println("You are snoozing on the battlefield! What are you doing?!?!");
+                this.statusEffects.put(Move.Status.Sleep, this.statusEffects.get(Move.Status.Sleep) - 1);
+            }
+
+            if (this.statusEffects.get(Move.Status.Sleep) == 0) {
+                System.out.println("Looks like you woke up!");
             }
         }
 
-        return 0;
+//        return 0;
     }
 
     /**
@@ -90,7 +144,7 @@ public abstract class Human extends Player { // User Class
      * Uses a potion (adds health)
      * @param potion the potion that will be used
      */
-    public void usePotion(Potion potion) {
+    public void addHealth(Potion potion) {
         if (potion.getBuff() + this.health > maxHealth) {
             health = maxHealth;
         } else {
