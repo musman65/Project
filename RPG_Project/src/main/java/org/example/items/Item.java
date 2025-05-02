@@ -1,8 +1,9 @@
 package org.example.items;
 
+import java.util.Comparator;
 import java.util.Objects;
 
-public class Item {
+public abstract class Item implements Comparator<Item> {
     private String name;
     private String description;
     private String rarity;

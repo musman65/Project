@@ -24,29 +24,30 @@ public class Wizard extends Human{
     /**
      * Allows the user to take damage while taking into account of its weakness
      * @param damage how much damage it takes
-     * @param moveType the type of move that was used to check if the entity is weak to the move
+     * @param move the move that was used
      */
     @Override
-    public void takeDamage(int damage, Move.Type moveType) {
+    public void takeDamage(int damage, Move move) {
         int multi = 1;
         float currentProt = this.equippedArmor == null ? 1 : this.equippedArmor.getProtection();
         int nullify = 1;
 
+        //todo: check for status effects
 
-        if (this.statusEffects.get(Move.Status.ArmorBreak) != 0) {
+        if (this.statusEffects.get(Move.Status.ArmorBreak) > 0) {
             currentProt *= 2;
             this.statusEffects.put(Move.Status.ArmorBreak, this.statusEffects.get(Move.Status.ArmorBreak) - 1);
         }
-        if (this.statusEffects.get(Move.Status.ArmorUp) != 0) {
+        if (this.statusEffects.get(Move.Status.ArmorUp) > 0) {
             currentProt /= 2;
             this.statusEffects.put(Move.Status.ArmorUp, this.statusEffects.get(Move.Status.ArmorUp) - 1);
         }
-        if (this.statusEffects.get(Move.Status.Burn) != 0) {
+        if (this.statusEffects.get(Move.Status.Burn) > 0) {
             this.health -= 5;
             this.statusEffects.put(Move.Status.Burn, this.statusEffects.get(Move.Status.Burn) - 1);
         }
 
-        if (moveType.equals(weakness)) {
+        if (move.getMoveType().equals(weakness)) {
             multi = 2;
         }
 

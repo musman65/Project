@@ -1,18 +1,34 @@
 package org.example.moves;
 
+import org.example.Player;
+
 import java.util.Objects;
 
 public class Move {
     private String name;
-    private Type moveType;
     private int buff;
-    private Effect effect;
+    private Type moveType; // Ghost or Physical
+    private final Effect effect; // What does the move do? Damage, heal or de-buff/buff?
+    private final Status status; // What kind of status effects does the move inflict?
 
-    public Move(String name, Type moveType, int buff, Effect effect) {
+    public Move(String name, Type moveType, int buff, Effect effect, Status status) {
         this.name = name;
         this.moveType = moveType;
         this.buff = buff;
         this.effect = effect;
+        this.status = status;
+    }
+
+    /**
+     * Uses a move (only for non-damaging moves)
+     * @param player1 the player entity that is using the move
+     */
+    public void use(Player player1) {
+        if (status != Status.None && effect == Effect.Damage) {
+            return;
+        }
+
+
     }
 
     @Override
@@ -38,10 +54,6 @@ public class Move {
         return effect;
     }
 
-    public void setEffect(Effect effect) {
-        this.effect = effect;
-    }
-
     public String getName() {
         return name;
     }
@@ -62,20 +74,25 @@ public class Move {
         return buff;
     }
 
+    public Status getStatus() {
+        return status;
+    }
+
     public void setBuff(int buff) {
         this.buff = buff;
     }
 
     public enum Status {
         Stun, // Player cannot do anything for 1 - 2 turn, however, his move has a chance (20%) to go through the stun
-        Hypnotize, // Slight change of player using the move on themselves
+        Hypnotize, // 50% chance of player using the move on themselves, lasts for 3 turns
         Burn, // Player loses a little bit of health every turn for 2 - 5
         Sleep, // Player cannot do anything for 2 - 3 but can wake up randomly whenever (cannot do anything on the turn he wakes up)
         Spook, // Player does 50% less damage || boss only buff
         ArmorBreak, // Player's armor protection is decreased 2x
         ArmorUp, // Player's armor protection is increased 2x
         DamageBuff, // Player does 2x more damage
-        Regen // Player gets a little bit every turn for 5 turns
+        Regen, // Player gets a little bit every turn for 5 turns
+        None
     }
 
     public enum Effect {

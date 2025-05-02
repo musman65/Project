@@ -26,9 +26,9 @@ public interface Fightable {
     /**
      * Lets the entity take damage
      * @param damage how much damage it takes
-     * @param moveType the type of move that was used to check if the entity is weak to the move
+     * @param move the move that was used
      */
-    void takeDamage(int damage, Move.Type moveType);
+    void takeDamage(int damage, Move move);
 
     /**
      * Makes the entity chose a move

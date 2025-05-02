@@ -26,14 +26,14 @@ public class Warrior extends Human {
     /**
      * Allows the user to take damage while taking into account of its weakness
      * @param damage how much damage it takes
-     * @param moveType the type of move that was used to check if the entity is weak to the move
+     * @param move the move that was used
      */
     @Override
-    public void takeDamage(int damage, Move.Type moveType) {
+    public void takeDamage(int damage, Move move) {
         int multi = 1;
         int armorStatus = 1;
         float currentProt = this.equippedArmor == null ? 1 : this.equippedArmor.getProtection();
-        if (moveType.equals(weakness)) {
+        if (move.getMoveType().equals(weakness)) {
             multi = 2;
         }
         this.health -= (multi * (currentProt * damage));

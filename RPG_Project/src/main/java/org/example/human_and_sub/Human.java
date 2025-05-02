@@ -9,6 +9,7 @@ import org.example.moves.Move;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Scanner;
 
 public abstract class Human extends Player { // User Class
@@ -29,7 +30,43 @@ public abstract class Human extends Player { // User Class
         this.statusEffects = statusEffects;
     }
 
+    /**
+     * Handles all the damage dealt with what move was used, what weapon is equipped and any status effects active
+     * @param move the move that is used
+     * @return the amount of damage done;
+     */
     public int doDamage(Move move) {
+        Random rand = new Random();
+        // Checks for stun
+        if (this.statusEffects.get(Move.Status.Stun) > 0) {
+            int willYouBreakFreeFromTheStun = rand.nextInt(1, 6);
+
+            if (willYouBreakFreeFromTheStun == 4) {
+                System.out.println("The stun wore off!");
+                this.statusEffects.put(Move.Status.Stun, 0);
+                move.use(this);
+                return move.getBuff() + equippedWeapon.getDamage();
+            } else {
+                System.out.println("You are stunned!");
+                this.statusEffects.put(Move.Status.Stun, this.statusEffects.get(Move.Status.Stun) - 1);
+            }
+
+            if (this.statusEffects.get(Move.Status.Stun) == 0) {
+                System.out.println("The stun was lifted!");
+                return 0;
+            }
+        }
+
+        if (this.statusEffects.get(Move.Status.Hypnotize) > 0) {
+            int willYouHitYourself = rand.nextInt(1, 3);
+
+            if (willYouHitYourself == 1) {
+                this.takeDamage(move.getBuff() + );
+            } else {
+
+            }
+        }
+
         return 0;
     }
 
