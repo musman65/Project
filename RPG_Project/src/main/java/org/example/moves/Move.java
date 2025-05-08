@@ -1,9 +1,12 @@
 package org.example.moves;
 
+import com.sun.security.jgss.GSSUtil;
 import org.example.Player;
 import org.example.enemy_and_sub.Enemy;
 
+import java.util.Map;
 import java.util.Objects;
+import java.util.Random;
 
 public class Move {
     private String name;
@@ -26,12 +29,22 @@ public class Move {
      */
     public void use(Player player) {
         if (status == Status.None && effect == Effect.Damage) {
+            System.out.println("Error" + player.getName() + this.name);
             return;
         }
         if (effect == Effect.Heal) {
             player.addHealth(this);
         } else if (effect == Effect.Status) {
-            player.inflictStatus(this);
+            Random rand = new Random();
+            int turns = 0;
+            switch (status) {
+                case ArmorUp -> turns = rand.nextInt(1, 3 + 1);
+                case Regen -> turns = 5;
+                case DamageBuff -> turns = rand.nextInt(1, 4 + 1);
+            }
+            Map<Status, Integer> map = player.getStatusEffects();
+            map.put(status, turns); // the effect should not stack
+            player.setStatusEffects(map);
         }
     }
 

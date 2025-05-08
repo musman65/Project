@@ -28,11 +28,8 @@ public class Wizard extends Human{
      */
     @Override
     public void takeDamage(int damage, Move move) {
-        int multi = 1;
+        int[] nums = takeDamageMainLogic(move);
         float currentProt = this.equippedArmor == null ? 1 : this.equippedArmor.getProtection();
-        int nullify = 1;
-
-        //todo: check for status effects
 
         if (this.statusEffects.get(Move.Status.ArmorBreak) > 0) {
             currentProt *= 2;
@@ -42,15 +39,11 @@ public class Wizard extends Human{
             currentProt /= 2;
             this.statusEffects.put(Move.Status.ArmorUp, this.statusEffects.get(Move.Status.ArmorUp) - 1);
         }
-        if (this.statusEffects.get(Move.Status.Burn) > 0) {
-            this.health -= 5;
-            this.statusEffects.put(Move.Status.Burn, this.statusEffects.get(Move.Status.Burn) - 1);
-        }
 
         if (move.getMoveType().equals(weakness)) {
-            multi = 2;
+            nums[0] = 2;
         }
 
-        this.health -= nullify * (multi * (currentProt * damage));
+        this.health -= nums[1] * (nums[0] * (currentProt * damage));
     }
 }

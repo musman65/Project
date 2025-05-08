@@ -47,14 +47,6 @@ public abstract class Player implements Fightable {
     public abstract void doDamage(Move move, Player player);
 
     /**
-     * Inflicts a status effect on the player entity
-     * @param move the move that was used
-     */
-    public void inflictStatus(Move move) {
-        statusEffects.put(move.getStatus(), statusEffects.get(move.getStatus()) + move.getBuff());
-    }
-
-    /**
      * Checks to see if the player object is alive
      * @return a boolean representing if it is alive or not
      */

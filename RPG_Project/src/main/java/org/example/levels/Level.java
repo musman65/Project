@@ -25,7 +25,6 @@ public class Level<T extends Enemy> {
         for (int i = 0; i < amount; i++) {
             int upperBound;
             int healthRemoved;
-
             if (i < amount - 1) {
                 healthRemoved = -50; // extra buff
             } else {

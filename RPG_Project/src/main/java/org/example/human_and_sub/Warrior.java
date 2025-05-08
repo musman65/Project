@@ -5,10 +5,7 @@ import org.example.items.Item;
 import org.example.items.Weapon;
 import org.example.moves.Move;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Warrior extends Human {
     private final Move.Type weakness = Move.Type.Ghost;
@@ -30,12 +27,22 @@ public class Warrior extends Human {
      */
     @Override
     public void takeDamage(int damage, Move move) {
-        int multi = 1;
-        int armorStatus = 1;
+        int[] nums = takeDamageMainLogic(move);
         float currentProt = this.equippedArmor == null ? 1 : this.equippedArmor.getProtection();
-        if (move.getMoveType().equals(weakness)) {
-            multi = 2;
+
+        if (this.statusEffects.get(Move.Status.ArmorBreak) > 0) {
+            currentProt *= 2;
+            this.statusEffects.put(Move.Status.ArmorBreak, this.statusEffects.get(Move.Status.ArmorBreak) - 1);
         }
-        this.health -= (multi * (currentProt * damage));
+        if (this.statusEffects.get(Move.Status.ArmorUp) > 0) {
+            currentProt /= 2;
+            this.statusEffects.put(Move.Status.ArmorUp, this.statusEffects.get(Move.Status.ArmorUp) - 1);
+        }
+
+        if (move.getMoveType().equals(weakness)) {
+            nums[0] = 2;
+        }
+
+        this.health -= nums[1] * (nums[0] * (currentProt * damage));
     }
 }

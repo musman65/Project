@@ -8,10 +8,7 @@ import org.example.items.Potion;
 import org.example.items.Weapon;
 import org.example.moves.Move;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 public abstract class Human extends Player { // User Class
     protected Weapon equippedWeapon;
@@ -27,6 +24,36 @@ public abstract class Human extends Player { // User Class
         this.equippedArmor = equippedArmor;
         this.moves = moves;
         this.inventory = inventory;
+    }
+
+    public int[] takeDamageMainLogic(Move move) {
+        Random rand = new Random();
+        int[] nums = new int[2];
+        int multi = 1;
+        int nullify = 1;
+
+        if (move.getStatus() != Move.Status.None) {
+            int turns = 0;
+
+            switch (move.getStatus()) { // added +1 because its exclusive and for better visualization of actual turn value
+                case Stun -> turns = rand.nextInt(1, 2 + 1);
+                case Hypnotize -> turns = 3;
+                case Burn -> turns = rand.nextInt(2, 5 + 1);
+                case Sleep, ArmorBreak -> turns = rand.nextInt(2 , 3 + 1);
+                case Spook -> turns = 2;
+            }
+
+            this.statusEffects.put(move.getStatus(), turns);
+        }
+
+        if (this.statusEffects.get(Move.Status.Burn) > 0) {
+            this.health -= 5;
+            this.statusEffects.put(Move.Status.Burn, this.statusEffects.get(Move.Status.Burn) - 1);
+        }
+        nums[0] = multi;
+        nums[1] = nullify;
+
+        return nums;
     }
 
     /**
