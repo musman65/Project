@@ -1,21 +1,30 @@
 package org.example.enemy_and_sub;
 
+import org.example.Player;
 import org.example.moves.Move;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Spectre extends Enemy {
     private final Move.Type weakness = Move.Type.Ghost;
 
-    public Spectre(String name, int health, int maxHealth) {
-        super(name, health, maxHealth);
+    public Spectre(String name, float health, float maxHealth, Map<Move.Status, Integer> statusEffects) {
+        super(name, health, maxHealth, statusEffects);
     }
 
-    /**
-     * Takes damage by removing health from the health field by taking weaknesses into account
-     * @param damage the damage dealt (how much should be removed)
-     * @param moveType the type of move that was used
-     */
     @Override
-    public void takeDamage(int damage, Move.Type moveType) {
+    public void takeDamage(int damage, Move move) {
 
+    }
+
+    @Override
+    public Enemy cloneEnemy() {
+        return new Spectre(this.getName(), this.getHealth(), this.getMaxHealth(), new HashMap<>());
+    }
+
+    @Override
+    public Enemy cloneEnemy(float maxHealth) {
+        return new Spectre(this.getName(), maxHealth, maxHealth, new HashMap<>());
     }
 }

@@ -16,6 +16,15 @@ public abstract class Player implements Fightable {
         this.health = health;
         this.name = name;
         this.statusEffects = statusEffects;
+        statusEffects.put(Move.Status.Sleep, 0);
+        statusEffects.put(Move.Status.Stun, 0);
+        statusEffects.put(Move.Status.Spook, 0);
+        statusEffects.put(Move.Status.DamageBuff, 0);
+        statusEffects.put(Move.Status.Hypnotize, 0);
+        statusEffects.put(Move.Status.ArmorBreak, 0);
+        statusEffects.put(Move.Status.ArmorUp, 0);
+        statusEffects.put(Move.Status.Burn, 0);
+        statusEffects.put(Move.Status.Regen, 0);
     }
 
     /**
@@ -29,6 +38,13 @@ public abstract class Player implements Fightable {
             health += move.getBuff();
         }
     }
+
+    /**
+     * Does damage also checks for status effects
+     * @param move the move that was used
+     * @param player the enemy the entity is using the move against
+     */
+    public abstract void doDamage(Move move, Player player);
 
     /**
      * Inflicts a status effect on the player entity
@@ -87,5 +103,13 @@ public abstract class Player implements Fightable {
 
     public void setMaxHealth(float maxHealth) {
         this.maxHealth = maxHealth;
+    }
+
+    public Map<Move.Status, Integer> getStatusEffects() {
+        return statusEffects;
+    }
+
+    public void setStatusEffects(Map<Move.Status, Integer> statusEffects) {
+        this.statusEffects = statusEffects;
     }
 }

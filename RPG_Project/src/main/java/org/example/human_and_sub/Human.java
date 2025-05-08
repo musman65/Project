@@ -34,7 +34,8 @@ public abstract class Human extends Player { // User Class
      * @param move the move that is used
      * @param enemy the enemy the move is being used against
      */
-    public void doDamage(Move move, Enemy enemy) {
+    @Override
+    public void doDamage(Move move, Player enemy) {
         Random rand = new Random();
         float multi = 1;
 
@@ -119,6 +120,8 @@ public abstract class Human extends Player { // User Class
             if (this.statusEffects.get(Move.Status.Sleep) == 0) {
                 System.out.println("Looks like you woke up!");
             }
+
+            return;
         }
 
 //        return 0;
