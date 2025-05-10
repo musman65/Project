@@ -172,7 +172,7 @@ public class Main { // Yeah, I took on way more than I could handle unfortunatel
 
         if (yesOrNO1.equals("y")) {
             String str = user.easyExportHuman();
-            File f = new File("src/main/resources/saves");
+            File f = new File("src/main/resources/saves.txt");
             try (FileWriter fw = new FileWriter(f)) {
                 fw.write(str);
             } catch (IOException e) {
@@ -201,7 +201,7 @@ public class Main { // Yeah, I took on way more than I could handle unfortunatel
 
         if (yesOrNO2.equals("y")) {
             String str = user.easyExportHuman();
-            File f = new File("src/main/resources/saves");
+            File f = new File("src/main/resources/saves.txt");
             try (FileWriter fw = new FileWriter(f)) {
                 fw.write(str);
             } catch (IOException e) {
@@ -230,7 +230,7 @@ public class Main { // Yeah, I took on way more than I could handle unfortunatel
 
         if (yesOrNO3.equals("y")) {
             String str = user.easyExportHuman();
-            File f = new File("src/main/resources/saves");
+            File f = new File("src/main/resources/saves.txt");
             try (FileWriter fw = new FileWriter(f)) {
                 fw.write(str);
             } catch (IOException e) {
