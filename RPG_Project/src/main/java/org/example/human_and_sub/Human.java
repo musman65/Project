@@ -26,36 +26,6 @@ public abstract class Human extends Player { // User Class
         this.inventory = inventory;
     }
 
-    public int[] takeDamageMainLogic(Move move) {
-        Random rand = new Random();
-        int[] nums = new int[2];
-        int multi = 1;
-        int nullify = 1;
-
-        if (move.getStatus() != Move.Status.None) {
-            int turns = 0;
-
-            switch (move.getStatus()) { // added +1 because its exclusive and for better visualization of actual turn value
-                case Stun -> turns = rand.nextInt(1, 2 + 1);
-                case Hypnotize -> turns = 3;
-                case Burn -> turns = rand.nextInt(2, 5 + 1);
-                case Sleep, ArmorBreak -> turns = rand.nextInt(2 , 3 + 1);
-                case Spook -> turns = 2;
-            }
-
-            this.statusEffects.put(move.getStatus(), turns);
-        }
-
-        if (this.statusEffects.get(Move.Status.Burn) > 0) {
-            this.health -= 5;
-            this.statusEffects.put(Move.Status.Burn, this.statusEffects.get(Move.Status.Burn) - 1);
-        }
-        nums[0] = multi;
-        nums[1] = nullify;
-
-        return nums;
-    }
-
     /**
      * Handles all the damage dealt with what move was used, what weapon is equipped and any status effects active
      * @param move the move that is used
@@ -151,7 +121,7 @@ public abstract class Human extends Player { // User Class
             return;
         }
 
-//        return 0;
+        enemy.takeDamage((int) (move.getBuff() + equippedWeapon.getDamage() * multi), move);
     }
 
     /**
@@ -237,6 +207,38 @@ public abstract class Human extends Player { // User Class
      */
     public void addMoveToMoves(List<Move> moves) {
         this.moves = moves;
+    }
+
+    public Weapon getEquippedWeapon() {
+        return equippedWeapon;
+    }
+
+    public void setEquippedWeapon(Weapon equippedWeapon) {
+        this.equippedWeapon = equippedWeapon;
+    }
+
+    public Armor getEquippedArmor() {
+        return equippedArmor;
+    }
+
+    public void setEquippedArmor(Armor equippedArmor) {
+        this.equippedArmor = equippedArmor;
+    }
+
+    public List<Move> getMoves() {
+        return moves;
+    }
+
+    public void setMoves(List<Move> moves) {
+        this.moves = moves;
+    }
+
+    public List<Item> getInventory() {
+        return inventory;
+    }
+
+    public void setInventory(List<Item> inventory) {
+        this.inventory = inventory;
     }
 
     /**

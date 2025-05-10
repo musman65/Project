@@ -4,9 +4,7 @@ import com.sun.security.jgss.GSSUtil;
 import org.example.Player;
 import org.example.enemy_and_sub.Enemy;
 
-import java.util.Map;
-import java.util.Objects;
-import java.util.Random;
+import java.util.*;
 
 public class Move {
     private String name;
@@ -14,6 +12,8 @@ public class Move {
     private Type moveType; // Ghost or Physical
     private final Effect effect; // What does the move do? Damage, heal or de-buff/buff?
     private final Status status; // What kind of status effects does the move inflict?
+
+    Random rand = new Random();
 
     public Move(String name, Type moveType, int buff, Effect effect, Status status) {
         this.name = name;
@@ -48,11 +48,25 @@ public class Move {
         }
     }
 
+    public static class MoveComp implements Comparator<Move> {
+        private String sortingMethod;
+
+        public MoveComp(String sortingMethod) {
+            this.sortingMethod = sortingMethod;
+        }
+
+        @Override
+        public int compare(Move o1, Move o2) {
+            return sortingMethod.charAt(0) == 'd' ? -(o1.getBuff() - o2.getBuff()) : (o1.getBuff() - o2.getBuff());
+        }
+    }
+
     @Override
     public String toString() {
         return "Move Name: \"" + name + "\"" +
                 "\n\tType = " + moveType +
-                "\n\tDamage = " + buff;
+                "\n\tDamage = " + buff +
+                "\n\tStatus = " + status;
     }
 
     @Override

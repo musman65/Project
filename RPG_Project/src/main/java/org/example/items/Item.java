@@ -3,7 +3,7 @@ package org.example.items;
 import java.util.Comparator;
 import java.util.Objects;
 
-public abstract class Item implements Comparator<Item> {
+public abstract class Item {
     private String name;
     private String description;
     private String rarity;

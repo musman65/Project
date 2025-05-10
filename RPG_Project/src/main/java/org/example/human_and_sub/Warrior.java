@@ -11,8 +11,8 @@ public class Warrior extends Human {
     private final Move.Type weakness = Move.Type.Ghost;
 
     // Normal constructor
-    public Warrior(String name) {
-        super(name, 100, 100, null, null, new ArrayList<>(), new ArrayList<>(), new HashMap<>());
+    public Warrior(String name, List<Move> moves) {
+        super(name, 250, 250, new Weapon("Steel Sword", "The default blade!", "Common", 10), new Armor("Steel armor", "The default armor!", "Common", 0.90f), moves, new ArrayList<>(), new HashMap<>());
     }
 
     // For importing from saves

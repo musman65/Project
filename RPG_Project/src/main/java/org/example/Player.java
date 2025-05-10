@@ -4,6 +4,7 @@ import org.example.moves.Move;
 
 import java.util.Map;
 import java.util.Objects;
+import java.util.Random;
 
 public abstract class Player implements Fightable {
     protected String name;
@@ -25,6 +26,40 @@ public abstract class Player implements Fightable {
         statusEffects.put(Move.Status.ArmorUp, 0);
         statusEffects.put(Move.Status.Burn, 0);
         statusEffects.put(Move.Status.Regen, 0);
+    }
+
+    /**
+     * The main logic of the takeDamage method in the enemy and user classes
+     * @param move
+     * @return
+     */
+    public int[] takeDamageMainLogic(Move move) {
+        Random rand = new Random();
+        int[] nums = new int[2];
+        int multi = 1;
+        int nullify = 1;
+
+        if (move.getStatus() != Move.Status.None) {
+            int turns = 0;
+
+            switch (move.getStatus()) { // added +1 because its exclusive and for better visualization of actual turn value
+                case Stun -> turns = rand.nextInt(1, 2 + 1);
+                case Hypnotize -> turns = 3;
+                case Burn -> turns = rand.nextInt(2, 5 + 1);
+                case Sleep, ArmorBreak -> turns = rand.nextInt(2 , 3 + 1);
+                case Spook -> turns = 2;
+            }
+            this.statusEffects.put(move.getStatus(), turns);
+        }
+
+        if (this.statusEffects.get(Move.Status.Burn) > 0) {
+            this.health -= 5;
+            this.statusEffects.put(Move.Status.Burn, this.statusEffects.get(Move.Status.Burn) - 1);
+        }
+        nums[0] = multi;
+        nums[1] = nullify;
+
+        return nums;
     }
 
     /**
@@ -51,14 +86,13 @@ public abstract class Player implements Fightable {
      * @return a boolean representing if it is alive or not
      */
     public boolean isAlive() {
-        return !(health == 0);
+        return !(health <= 0);
     }
 
     @Override
     public String toString() {
-        return "name='" + name + '\'' +
-                ", health=" + health +
-                ", maxHealth=" + maxHealth;
+        return "\nName = " + name + "\n" +
+                "Health = " + health;
     }
 
     @Override

@@ -12,8 +12,8 @@ public class Wizard extends Human{
     private final Move.Type weakness = Move.Type.Physical;
 
     // Normal constructor
-    public Wizard(String name) {
-        super(name, 100, 100, null, null, new ArrayList<>(), new ArrayList<>(), new HashMap<>());
+    public Wizard(String name, List<Move> moves) {
+        super(name, 200, 200, new Weapon("Staff", "The default staff!", "Common", 10), new Armor("Robe", "Classic looking robe!", "Common", 0.90f), moves, new ArrayList<>(), new HashMap<>());
     }
 
     // For importing from saves

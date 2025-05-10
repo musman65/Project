@@ -7,21 +7,92 @@ import org.example.moves.MoveStrategy;
 
 import java.util.*;
 
-public abstract class Enemy extends Player implements MoveStrategy {
-    protected List<Move> moves = new ArrayList<>();
+/*
+notes (delete later):
 
-    public Enemy(String name, float health, float maxHealth, Map<Move.Status, Integer> statusEffects) {
+    at least 4 damage moves to each enemy
+    at least 1 status and heal move to each enemy
+
+
+
+ */
+public abstract class Enemy extends Player implements MoveStrategy {
+    protected List<Move> moves;
+
+    private Random rand = new Random();
+
+    public Enemy(String name, float health, float maxHealth, Map<Move.Status, Integer> statusEffects, List<Move> moves) {
         super(name, maxHealth, health, statusEffects);
+        this.moves = moves;
     }
 
-    public Map<String, Integer> moveSorter (Move.Type moveType, List<Move> moves) {
-        Map<String, Integer> map = new HashMap<>();
+    public List<Move> assortMovesEffect(Move.Effect effectToFind) {
+        int randInt = rand.nextInt(1,3);
+        List<Move> filteredMoves = this.moves;
 
-        for (int i = 0; i < moves.size(); i++) {
-//            if (map.put(i))
+        if (randInt == 1) {
+            filteredMoves.sort(new Move.MoveComp("descending"));
+        } else {
+            filteredMoves.sort(new Move.MoveComp("ascending"));
         }
 
-        return map;
+        filteredMoves = filteredMoves.stream()
+                .filter(move -> {
+                    if (move.getEffect() == effectToFind) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                })
+                .toList();
+
+        return filteredMoves;
+    }
+
+    public List<Move> assortMovesEffect(Move.Effect effectToFind, String order) {
+        int randInt = rand.nextInt(1,3);
+        List<Move> filteredMoves = this.moves;
+
+        filteredMoves.sort(new Move.MoveComp(order));
+
+        filteredMoves = filteredMoves.stream()
+                .filter(move -> {
+                    if (move.getEffect() == effectToFind) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                })
+                .toList();
+
+        return filteredMoves;
+    }
+
+    public List<Move> assortMovesStatus(Move.Status statusToFind) {
+        int randInt = rand.nextInt(1,3);
+        List<Move> filteredMoves = this.moves;
+
+        if (randInt == 1) {
+            filteredMoves.sort(new Move.MoveComp("descending"));
+        } else {
+            filteredMoves.sort(new Move.MoveComp("ascending"));
+        }
+
+        filteredMoves = filteredMoves.stream()
+                .filter(move -> {
+                    if (move.getStatus() == statusToFind) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                })
+                .toList();
+
+        if (filteredMoves.isEmpty()) {
+            return null;
+        } else {
+            return filteredMoves;
+        }
     }
 
     /**
@@ -33,6 +104,11 @@ public abstract class Enemy extends Player implements MoveStrategy {
     public void doDamage(Move move, Player enemy) {
         Random rand = new Random();
         float multi = 1;
+
+        if (move.getEffect() != Move.Effect.Damage) {
+            move.use(this);
+            return;
+        }
 
         if (this.statusEffects.get(Move.Status.DamageBuff) > 0) {
             multi = 2;
@@ -119,7 +195,7 @@ public abstract class Enemy extends Player implements MoveStrategy {
             return;
         }
 
-//        return 0;
+        enemy.takeDamage((int) (move.getBuff() * multi), move);
     }
 
     /**
@@ -143,9 +219,57 @@ public abstract class Enemy extends Player implements MoveStrategy {
      */
     @Override
     public Move selectMoveStrategy(Enemy enemy, Human human) {
+        if (human.getHealth() >= 0.90 * human.getMaxHealth() && health >= maxHealth * 0.90) {
+            int num1 = rand.nextInt(1, 3);
+            if (num1 == 1) {
+                return assortMovesEffect(Move.Effect.Status).get(1);
+            } else if (num1 == 2) {
+                return assortMovesEffect(Move.Effect.Damage).get(2);
+            }
+        }
 
+        if (health <= maxHealth * 0.10 && rand.nextInt(1, 5) < 3) {
+            return assortMovesEffect(Move.Effect.Damage, "a").get(0);
+        }
 
-        return null;
+        if (human.getHealth() >= human.getMaxHealth() * 0.5 && rand.nextInt(1, 6) == 1) {
+            return assortMovesStatus(Move.Status.Stun) != null ? assortMovesStatus(Move.Status.Stun).get(0) : assortMovesEffect(Move.Effect.Status).get(0);
+        }
+
+        if (human.getHealth() >= 0.60 * human.getMaxHealth() && health <= maxHealth * 0.30) {
+            if (rand.nextInt(1, 5) == 1) {
+                return assortMovesEffect(Move.Effect.Damage).get(0);
+            }
+
+            if (health <= maxHealth * 0.10 && rand.nextInt(1, 5) == 1) {
+                List<Move> healMoves = assortMovesEffect(Move.Effect.Heal);
+                return healMoves.get(0);
+            }
+            if (health <= maxHealth * 0.20 && rand.nextInt(1, 3) == 1) {
+                List<Move> healMoves = assortMovesEffect(Move.Effect.Heal);
+                return healMoves.get(1);
+            }
+            if (health <= maxHealth * 0.30 && rand.nextInt(1, 4) == 1) {
+                List<Move> healMoves = assortMovesEffect(Move.Effect.Heal);
+                return healMoves.get(1);
+            }
+        }
+
+        if (health <= maxHealth * 0.15 && rand.nextInt(1, 5) == 1) {
+            return assortMovesEffect(Move.Effect.Heal,"a").get(0);
+        }
+
+        if (human.getHealth() <= 0.30 * human.getMaxHealth()) {
+            if (rand.nextInt(1, 3) == 1) {
+                return assortMovesEffect(Move.Effect.Damage).get(1);
+            }
+        }
+
+        if (human.getHealth() <= 0.40 * human.getMaxHealth() && rand.nextInt(1, 5) == 1) {
+            return assortMovesEffect(Move.Effect.Status).get(0);
+        }
+
+        return assortMovesEffect(Move.Effect.Damage).get(rand.nextInt(0, 3));
     }
 
     /**
@@ -155,6 +279,12 @@ public abstract class Enemy extends Player implements MoveStrategy {
      */
     @Override
     public Move chooseMove(Player player) {
+        if (player instanceof Human h) {
+            Move m1 = selectMoveStrategy(this, h);
+            System.out.println("The enemy used " + m1.getName());
+            return m1;
+        }
         return null;
     }
+
 }
