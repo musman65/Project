@@ -19,7 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
-public class Main {
+public class Main { // Yeah, I took on way more than I could handle unfortunately...
     public static void main(String[] args) {
         //ALL MOVE INITIALIZATIONS. Yes, I know this is an awful way of doing things. I also don't know how else to do it so forgive me
         //todo: |||||||||||||
